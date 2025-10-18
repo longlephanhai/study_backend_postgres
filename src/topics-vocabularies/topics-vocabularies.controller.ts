@@ -1,25 +1,50 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { TopicsVocabulariesService } from './topics-vocabularies.service';
 import { CreateTopicsVocabularyDto } from './dto/create-topics-vocabulary.dto';
 import { UpdateTopicsVocabularyDto } from './dto/update-topics-vocabulary.dto';
+import { ResponseMessage, User } from 'src/decorator/customize';
+import { CreateVocabularyDto } from 'src/vocabularies/dto/create-vocabulary.dto';
 
 @Controller('topics-vocabularies')
 export class TopicsVocabulariesController {
-  constructor(private readonly topicsVocabulariesService: TopicsVocabulariesService) {}
+  constructor(private readonly topicsVocabulariesService: TopicsVocabulariesService) { }
 
   @Post()
   create(@Body() createTopicsVocabularyDto: CreateTopicsVocabularyDto) {
     return this.topicsVocabulariesService.create(createTopicsVocabularyDto);
   }
 
+  @Post('multiple')
+  @ResponseMessage('Multiple topics vocabularies created successfully')
+  createMultiple(@Body() createTopicsVocabularyDtos: CreateTopicsVocabularyDto[]) {
+    return this.topicsVocabulariesService.createMultiple(createTopicsVocabularyDtos);
+  }
+
+  @Post(':id/vocabularies/multiple')
+  @ResponseMessage('Part created successfully')
+  createPart(@Param('id') id: string, @Body() createVocabularyDto: CreateVocabularyDto[], @User() user: IUser) {
+    return this.topicsVocabulariesService.createMultipleVocabulary(id, createVocabularyDto, user);
+  }
+
   @Get()
-  findAll() {
-    return this.topicsVocabulariesService.findAll();
+  @ResponseMessage("Get all topics vocabularies with pagination")
+  findAll(
+    @Query("current") currentPage: string,
+    @Query("pageSize") limit: string,
+    @Query() qs: string) {
+    return this.topicsVocabulariesService.findAll(+currentPage, +limit, qs);
+  }
+
+  @Get('ai-review/:id')
+  @ResponseMessage("Create questions for AI review")
+  getVocabulariesForAiReview(@Param('id') id: string) {
+    return this.topicsVocabulariesService.getVocabulariesFromAI(id);
   }
 
   @Get(':id')
+  @ResponseMessage("Get a topics vocabulary by id")
   findOne(@Param('id') id: string) {
-    return this.topicsVocabulariesService.findOne(+id);
+    return this.topicsVocabulariesService.findOne(id);
   }
 
   @Patch(':id')

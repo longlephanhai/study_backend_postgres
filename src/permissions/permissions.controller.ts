@@ -1,20 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { PermissionsService } from './permissions.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
+import { ResponseMessage, User } from 'src/decorator/customize';
 
 @Controller('permissions')
 export class PermissionsController {
-  constructor(private readonly permissionsService: PermissionsService) {}
+  constructor(private readonly permissionsService: PermissionsService) { }
 
   @Post()
-  create(@Body() createPermissionDto: CreatePermissionDto) {
-    return this.permissionsService.create(createPermissionDto);
+  @ResponseMessage("Create permission successfully")
+  create(@Body() createPermissionDto: CreatePermissionDto, @User() user: IUser) {
+    return this.permissionsService.create(createPermissionDto, user);
   }
 
   @Get()
-  findAll() {
-    return this.permissionsService.findAll();
+  @ResponseMessage("Get all permissions with pagination")
+  findAll(
+    @Query("current") currentPage: string,
+    @Query("pageSize") limit: string,
+    @Query() qs: string) {
+    return this.permissionsService.findAll(+currentPage, +limit, qs);
   }
 
   @Get(':id')

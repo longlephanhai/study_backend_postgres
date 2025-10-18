@@ -12,15 +12,15 @@ export class VocabulariesService {
     return `This action returns all vocabularies`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} vocabulary`;
+  findOne(_id: number) {
+    return `This action returns a #${_id} vocabulary`;
   }
 
-  update(id: number, updateVocabularyDto: UpdateVocabularyDto) {
-    return `This action updates a #${id} vocabulary`;
+  update(_id: number, updateVocabularyDto: UpdateVocabularyDto) {
+    return `This action updates a #${_id} vocabulary`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} vocabulary`;
+  remove(_id: number) {
+    return `This action removes a #${_id} vocabulary`;
   }
 }

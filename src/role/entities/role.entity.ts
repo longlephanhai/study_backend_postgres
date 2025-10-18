@@ -14,7 +14,7 @@ import {
 @Entity({ name: 'roles' })
 export class Role {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column({ nullable: false })
   name: string;

@@ -13,7 +13,7 @@ import { Part } from 'src/parts/entities/part.entity';
 @Entity('tests')
 export class Test {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column()
   title: string;
@@ -37,8 +37,8 @@ export class Test {
   @ManyToMany(() => Part, { cascade: true })
   @JoinTable({
     name: 'test_parts', // tên bảng trung gian
-    joinColumn: { name: 'test_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'part_id', referencedColumnName: 'id' },
+    joinColumn: { name: 'test_id', referencedColumnName: '_id' },
+    inverseJoinColumn: { name: 'part_id', referencedColumnName: '_id' },
   })
   parts?: Part[];
 

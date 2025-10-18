@@ -13,7 +13,7 @@ import { Question } from 'src/question/entities/question.entity';
 @Entity('parts')
 export class Part {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column()
   partNo: number;
@@ -33,8 +33,8 @@ export class Part {
   @ManyToMany(() => Question)
   @JoinTable({
     name: 'part_questions',
-    joinColumn: { name: 'part_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'question_id', referencedColumnName: 'id' },
+    joinColumn: { name: 'part_id', referencedColumnName: '_id' },
+    inverseJoinColumn: { name: 'question_id', referencedColumnName: '_id' },
   })
   questions: Question[];
 

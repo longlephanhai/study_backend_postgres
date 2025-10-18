@@ -29,7 +29,7 @@ export class TestsService {
     const newTest = await this.testRepository.save({
       ...createTestDto,
       createdBy: {
-        _id: user.id,
+        _id: user._id,
         email: user.email,
       }
     })
@@ -49,7 +49,7 @@ export class TestsService {
       createTestDto.map(test => ({
         ...test,
         createdBy: {
-          _id: user.id,
+          _id: user._id,
           email: user.email,
         }
       }))
@@ -58,58 +58,65 @@ export class TestsService {
   }
 
   async createPart(testId: string, createPartDto: CreatePartDto, user: IUser) {
-    const test = await this.testRepository.findOne({ where: { id: testId } });
+    const test = await this.testRepository.findOne({ where: { _id: testId } });
     if (!test) {
       throw new BadRequestException('Test not found');
     }
     const newPart = await this.partRepository.save({
       ...createPartDto,
       createdBy: {
-        _id: user.id,
+        _id: user._id,
         email: user.email,
       }
     });
-    await this.testRepository.update(test.id, {
+    await this.testRepository.update(test._id, {
       parts: [...(test.parts || []), newPart],
     })
     return newPart;
   }
 
   async createMultipleParts(testId: string, createPartDto: CreatePartDto[], user: IUser) {
-    const test = await this.testRepository.findOne({ where: { id: testId } });
+    const test = await this.testRepository.findOne({
+      where: { _id: testId },
+      relations: ['parts'],
+    });
+
     if (!test) {
       throw new BadRequestException('Test not found');
     }
 
-    const parts = await this.partRepository.find({
+    // Kiểm tra parts đã tồn tại
+    const existingParts = await this.partRepository.find({
       where: {
         partNo: In(createPartDto.map(part => part.partNo)),
-        id: In((test.parts || []).map(p => (typeof p === 'object' ? (p as any).id : p))),
-      }
+        _id: In((test.parts || []).map(p => (typeof p === 'object' ? (p as any)._id : p))),
+      },
     });
 
-    if (parts.length) {
-      const existPartNos = parts.map(part => part.partNo);
-      throw new BadRequestException(`Parts with these part numbers are already exist in this test: ${existPartNos.join(', ')}`);
+    if (existingParts.length) {
+      const existPartNos = existingParts.map(part => part.partNo);
+      throw new BadRequestException(
+        `Parts with these part numbers already exist in this test: ${existPartNos.join(', ')}`,
+      );
     }
+
 
     const newParts = await this.partRepository.save(
       createPartDto.map(part => ({
         ...part,
-        createdBy: {
-          _id: user.id,
-          email: user.email,
-        }
-      }))
+        createdBy: { _id: user._id, email: user.email },
+      })),
     );
-    await this.testRepository.update(test.id, {
-      parts: [...(test.parts || []), ...newParts],
-    })
+
+    test.parts = [...(test.parts || []), ...newParts];
+    await this.testRepository.save(test);
+
     return newParts;
   }
 
+
   async findAll(currentPage: number, limit: number, qs: string) {
-    const { filter, sort, population } = aqp(qs);
+    const { filter, sort, population } = aqp(qs) as any;
     delete filter.current;
     delete filter.pageSize;
 
@@ -127,6 +134,7 @@ export class TestsService {
 
     // convert population to relations array if requested
     let relations: string[] | undefined = undefined;
+
     if (population) {
       if (Array.isArray(population)) {
         relations = population as unknown as string[];
@@ -143,7 +151,7 @@ export class TestsService {
       skip,
       take,
       order,
-      relations,
+      relations: ['parts'],
     });
 
     const totalPages = Math.ceil(totalItems / take);
@@ -166,20 +174,20 @@ export class TestsService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(_id: string) {
     return await this.testRepository.findOne(
       {
-        where: { id },
+        where: { _id },
         relations: ['parts'],
       }
     );
   }
 
-  update(id: number, updateTestDto: UpdateTestDto) {
-    return `This action updates a #${id} test`;
+  update(_id: number, updateTestDto: UpdateTestDto) {
+    return `This action updates a #${_id} test`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} test`;
+  remove(_id: number) {
+    return `This action removes a #${_id} test`;
   }
 }

@@ -24,8 +24,8 @@ export class GrammarsService {
     return 'This action adds a new grammar';
   }
 
-  async findQuestionsByAI(id: string) {
-    const grammar = await this.grammarRepository.findOne({ where: { id } });
+  async findQuestionsByAI(_id: string) {
+    const grammar = await this.grammarRepository.findOne({ where: { _id } });
     if (!grammar) {
       throw new BadRequestException('Grammar not found');
     }
@@ -159,15 +159,15 @@ Yêu cầu:
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} grammar`;
+  findOne(_id: number) {
+    return `This action returns a #${_id} grammar`;
   }
 
-  update(id: number, updateGrammarDto: UpdateGrammarDto) {
-    return `This action updates a #${id} grammar`;
+  update(_id: number, updateGrammarDto: UpdateGrammarDto) {
+    return `This action updates a #${_id} grammar`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} grammar`;
+  remove(_id: number) {
+    return `This action removes a #${_id} grammar`;
   }
 }

@@ -14,7 +14,7 @@ import { Question } from 'src/question/entities/question.entity';
 @Entity('exam_results')
 export class ExamResult {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column()
   testId: string;
@@ -35,8 +35,8 @@ export class ExamResult {
   @ManyToMany(() => Part)
   @JoinTable({
     name: 'exam_result_parts',
-    joinColumn: { name: 'exam_result_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'part_id', referencedColumnName: 'id' },
+    joinColumn: { name: 'exam_result_id', referencedColumnName: '_id' },
+    inverseJoinColumn: { name: 'part_id', referencedColumnName: '_id' },
   })
   parts: Part[];
 
@@ -44,8 +44,8 @@ export class ExamResult {
   @ManyToMany(() => Question)
   @JoinTable({
     name: 'exam_result_correct_answers',
-    joinColumn: { name: 'exam_result_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'question_id', referencedColumnName: 'id' },
+    joinColumn: { name: 'exam_result_id', referencedColumnName: '_id' },
+    inverseJoinColumn: { name: 'question_id', referencedColumnName: '_id' },
   })
   correctAnswer: Question[];
 
@@ -53,8 +53,8 @@ export class ExamResult {
   @ManyToMany(() => Question)
   @JoinTable({
     name: 'exam_result_wrong_answers',
-    joinColumn: { name: 'exam_result_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'question_id', referencedColumnName: 'id' },
+    joinColumn: { name: 'exam_result_id', referencedColumnName: '_id' },
+    inverseJoinColumn: { name: 'question_id', referencedColumnName: '_id' },
   })
   wrongAnswer: Question[];
 
@@ -62,8 +62,8 @@ export class ExamResult {
   @ManyToMany(() => Question)
   @JoinTable({
     name: 'exam_result_no_answers',
-    joinColumn: { name: 'exam_result_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'question_id', referencedColumnName: 'id' },
+    joinColumn: { name: 'exam_result_id', referencedColumnName: '_id' },
+    inverseJoinColumn: { name: 'question_id', referencedColumnName: '_id' },
   })
   noAnswer: Question[];
 

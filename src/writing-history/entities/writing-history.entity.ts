@@ -12,7 +12,7 @@ import { Writing } from 'src/writing/entities/writing.entity';
 @Entity('writing_histories')
 export class WritingHistory {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column()
   userId: string; // mongoose.Schema.Types.ObjectId → string (uuid hoặc ObjectId)

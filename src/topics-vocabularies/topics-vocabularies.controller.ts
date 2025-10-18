@@ -20,10 +20,10 @@ export class TopicsVocabulariesController {
     return this.topicsVocabulariesService.createMultiple(createTopicsVocabularyDtos);
   }
 
-  @Post(':id/vocabularies/multiple')
+  @Post(':_id/vocabularies/multiple')
   @ResponseMessage('Part created successfully')
-  createPart(@Param('id') id: string, @Body() createVocabularyDto: CreateVocabularyDto[], @User() user: IUser) {
-    return this.topicsVocabulariesService.createMultipleVocabulary(id, createVocabularyDto, user);
+  createPart(@Param('_id') _id: string, @Body() createVocabularyDto: CreateVocabularyDto[], @User() user: IUser) {
+    return this.topicsVocabulariesService.createMultipleVocabulary(_id, createVocabularyDto, user);
   }
 
   @Get()
@@ -35,25 +35,25 @@ export class TopicsVocabulariesController {
     return this.topicsVocabulariesService.findAll(+currentPage, +limit, qs);
   }
 
-  @Get('ai-review/:id')
+  @Get('ai-review/:_id')
   @ResponseMessage("Create questions for AI review")
-  getVocabulariesForAiReview(@Param('id') id: string) {
-    return this.topicsVocabulariesService.getVocabulariesFromAI(id);
+  getVocabulariesForAiReview(@Param('_id') _id: string) {
+    return this.topicsVocabulariesService.getVocabulariesFromAI(_id);
   }
 
-  @Get(':id')
-  @ResponseMessage("Get a topics vocabulary by id")
-  findOne(@Param('id') id: string) {
-    return this.topicsVocabulariesService.findOne(id);
+  @Get(':_id')
+  @ResponseMessage("Get a topics vocabulary by _id")
+  findOne(@Param('_id') _id: string) {
+    return this.topicsVocabulariesService.findOne(_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTopicsVocabularyDto: UpdateTopicsVocabularyDto) {
-    return this.topicsVocabulariesService.update(+id, updateTopicsVocabularyDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updateTopicsVocabularyDto: UpdateTopicsVocabularyDto) {
+    return this.topicsVocabulariesService.update(+_id, updateTopicsVocabularyDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.topicsVocabulariesService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.topicsVocabulariesService.remove(+_id);
   }
 }

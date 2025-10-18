@@ -12,15 +12,15 @@ export class QuestionService {
     return `This action returns all question`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} question`;
+  findOne(_id: number) {
+    return `This action returns a #${_id} question`;
   }
 
-  update(id: number, updateQuestionDto: UpdateQuestionDto) {
-    return `This action updates a #${id} question`;
+  update(_id: number, updateQuestionDto: UpdateQuestionDto) {
+    return `This action updates a #${_id} question`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} question`;
+  remove(_id: number) {
+    return `This action removes a #${_id} question`;
   }
 }

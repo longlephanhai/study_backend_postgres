@@ -12,7 +12,7 @@ import {
 @Entity('vocabularies')
 export class Vocabulary {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column()
   vocab: string;

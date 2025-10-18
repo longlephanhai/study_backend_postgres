@@ -25,23 +25,23 @@ export class WritingHistoryController {
 
   @Get('by-user')
   @ResponseMessage("Get all writing history by userId")
-  findByUserId(@User('id') userId: string) {
+  findByUserId(@User('_id') userId: string) {
     return this.writingHistoryService.findByUserId(userId);
   }
 
-  @Get(':id')
-  @ResponseMessage("Get writing history by id")
-  findOne(@Param('id') id: string, @User('id') userId: string) {
-    return this.writingHistoryService.findOne(id, userId);
+  @Get(':_id')
+  @ResponseMessage("Get writing history by _id")
+  findOne(@Param('_id') _id: string, @User('_id') userId: string) {
+    return this.writingHistoryService.findOne(_id, userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWritingHistoryDto: UpdateWritingHistoryDto) {
-    return this.writingHistoryService.update(+id, updateWritingHistoryDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updateWritingHistoryDto: UpdateWritingHistoryDto) {
+    return this.writingHistoryService.update(+_id, updateWritingHistoryDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.writingHistoryService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.writingHistoryService.remove(+_id);
   }
 }

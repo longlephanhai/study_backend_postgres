@@ -22,24 +22,24 @@ export class GrammarsController {
     return this.grammarsService.findAll(+currentPage, +limit, qs);
   }
 
-  @Get('questions-ai/:id')
+  @Get('questions-ai/:_id')
   @ResponseMessage("Get grammar questions by AI")
-  findQuestionsByAI(@Param('id') id: string) {
-    return this.grammarsService.findQuestionsByAI(id);
+  findQuestionsByAI(@Param('_id') _id: string) {
+    return this.grammarsService.findQuestionsByAI(_id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.grammarsService.findOne(+id);
+  @Get(':_id')
+  findOne(@Param('_id') _id: string) {
+    return this.grammarsService.findOne(+_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGrammarDto: UpdateGrammarDto) {
-    return this.grammarsService.update(+id, updateGrammarDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updateGrammarDto: UpdateGrammarDto) {
+    return this.grammarsService.update(+_id, updateGrammarDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.grammarsService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.grammarsService.remove(+_id);
   }
 }

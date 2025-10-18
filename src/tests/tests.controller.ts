@@ -21,16 +21,16 @@ export class TestsController {
     return this.testsService.createMultiple(createTestDto, user);
   }
 
-  @Post(':id/parts')
+  @Post(':_id/parts')
   @ResponseMessage('Part created successfully')
-  createPart(@Param('id') id: string, @Body() createPartDto: CreatePartDto, @User() user: IUser) {
-    return this.testsService.createPart(id, createPartDto, user);
+  createPart(@Param('_id') _id: string, @Body() createPartDto: CreatePartDto, @User() user: IUser) {
+    return this.testsService.createPart(_id, createPartDto, user);
   }
 
-  @Post(':id/parts/multiple')
+  @Post(':_id/parts/multiple')
   @ResponseMessage('Parts created successfully')
-  createMultipleParts(@Param('id') id: string, @Body() createPartDto: CreatePartDto[], @User() user: IUser) {
-    return this.testsService.createMultipleParts(id, createPartDto, user);
+  createMultipleParts(@Param('_id') _id: string, @Body() createPartDto: CreatePartDto[], @User() user: IUser) {
+    return this.testsService.createMultipleParts(_id, createPartDto, user);
   }
 
   @Get()
@@ -42,18 +42,18 @@ export class TestsController {
     return this.testsService.findAll(+currentPage, +limit, qs);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.testsService.findOne(id);
+  @Get(':_id')
+  findOne(@Param('_id') _id: string) {
+    return this.testsService.findOne(_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTestDto: UpdateTestDto) {
-    return this.testsService.update(+id, updateTestDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updateTestDto: UpdateTestDto) {
+    return this.testsService.update(+_id, updateTestDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.testsService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.testsService.remove(+_id);
   }
 }

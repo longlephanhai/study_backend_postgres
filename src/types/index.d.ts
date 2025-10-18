@@ -1,14 +1,25 @@
 declare global {
   interface IUser {
-    id: string;
+    _id: string;
     fullName: string;
     age: number;
     email: string;
     avatar: string;
     phone: number;
     address: string;
-    role: string;
+    role: IRole;
     targetScore: number;
+  }
+
+  interface IRole {
+    _id: string,
+    name: string,
+    description?: string,
+    permissions?: string[],
+    createdBy: {
+      _id: string,
+      email: string
+    },
   }
 
   interface PromptDto {

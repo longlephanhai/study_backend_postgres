@@ -76,19 +76,19 @@ export class WritingHistoryService {
     }
   }
 
-  async findOne(id: string, userId: string) {
-    return await this.writingHistoryRepository.findOne({ where: { id, userId } });
+  async findOne(_id: string, userId: string) {
+    return await this.writingHistoryRepository.findOne({ where: { _id, userId } });
   }
 
   async findByUserId(userId: string) {
     return await this.writingHistoryRepository.find({ where: { userId }, relations: ['writingId'] });
   }
 
-  update(id: number, updateWritingHistoryDto: UpdateWritingHistoryDto) {
-    return `This action updates a #${id} writingHistory`;
+  update(_id: number, updateWritingHistoryDto: UpdateWritingHistoryDto) {
+    return `This action updates a #${_id} writingHistory`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} writingHistory`;
+  remove(_id: number) {
+    return `This action removes a #${_id} writingHistory`;
   }
 }

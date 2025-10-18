@@ -28,19 +28,19 @@ export class WritingController {
     return this.writingService.findAll(+currentPage, +limit, qs);
   }
 
-  @Get(':id')
+  @Get(':_id')
   @ResponseMessage("Get writing successfully")
-  findOne(@Param('id') id: string) {
-    return this.writingService.findOne(id);
+  findOne(@Param('_id') _id: string) {
+    return this.writingService.findOne(_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWritingDto: UpdateWritingDto) {
-    return this.writingService.update(+id, updateWritingDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updateWritingDto: UpdateWritingDto) {
+    return this.writingService.update(+_id, updateWritingDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.writingService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.writingService.remove(+_id);
   }
 }

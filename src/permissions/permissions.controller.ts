@@ -23,18 +23,18 @@ export class PermissionsController {
     return this.permissionsService.findAll(+currentPage, +limit, qs);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.permissionsService.findOne(+id);
+  @Get(':_id')
+  findOne(@Param('_id') _id: string) {
+    return this.permissionsService.findOne(+_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePermissionDto: UpdatePermissionDto) {
-    return this.permissionsService.update(+id, updatePermissionDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updatePermissionDto: UpdatePermissionDto) {
+    return this.permissionsService.update(+_id, updatePermissionDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.permissionsService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.permissionsService.remove(+_id);
   }
 }

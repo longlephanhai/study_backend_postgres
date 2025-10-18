@@ -10,7 +10,7 @@ import {
 @Entity('questions')
 export class Question {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column()
   numberQuestion: number;

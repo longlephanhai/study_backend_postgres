@@ -17,18 +17,18 @@ export class VocabulariesController {
     return this.vocabulariesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.vocabulariesService.findOne(+id);
+  @Get(':_id')
+  findOne(@Param('_id') _id: string) {
+    return this.vocabulariesService.findOne(+_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVocabularyDto: UpdateVocabularyDto) {
-    return this.vocabulariesService.update(+id, updateVocabularyDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updateVocabularyDto: UpdateVocabularyDto) {
+    return this.vocabulariesService.update(+_id, updateVocabularyDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.vocabulariesService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.vocabulariesService.remove(+_id);
   }
 }

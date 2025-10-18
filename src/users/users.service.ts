@@ -56,15 +56,15 @@ export class UsersService {
 
     const newUser = await this.usersRepository.save({
       ...createUserDto,
-      role: createUserDto.roleId ? { id: createUserDto.roleId } as Role : undefined,
+      role: createUserDto.roleId ? { _id: createUserDto.roleId } as Role : undefined,
       password: hashedPassword,
       createdBy: {
-        _id: user.id,
+        _id: user._id,
         email: user.email
       }
     });
 
-    return newUser.id;
+    return newUser._id;
   }
 
   async findAll(currentPage: number, limit: number, qs: string) {
@@ -125,15 +125,15 @@ export class UsersService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(_id: number) {
+    return `This action returns a #${_id} user`;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  update(_id: number, updateUserDto: UpdateUserDto) {
+    return `This action updates a #${_id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(_id: number) {
+    return `This action removes a #${_id} user`;
   }
 }

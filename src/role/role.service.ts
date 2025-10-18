@@ -27,7 +27,7 @@ export class RoleService {
     const newRole = this.roleRepository.create({
       ...createRoleDto,
       createdBy: {
-        _id: user.id,
+        _id: user._id,
         email: user.email,
       }
     } as any);
@@ -92,26 +92,26 @@ export class RoleService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
+  findOne(_id: number) {
+    return `This action returns a #${_id} role`;
   }
 
-  async update(id: string, updateRoleDto: UpdateRoleDto, user: IUser) {
-    const role = await this.roleRepository.findOne({ where: { id } });
+  async update(_id: string, updateRoleDto: UpdateRoleDto, user: IUser) {
+    const role = await this.roleRepository.findOne({ where: { _id } });
     if (!role) {
       throw new BadRequestException("Role not found");
     }
-    const updateRole = await this.roleRepository.update(id, {
+    const updateRole = await this.roleRepository.update(_id, {
       ...updateRoleDto,
       updatedBy: {
-        _id: user.id,
+        _id: user._id,
         email: user.email,
       }
     } as any);
     return updateRole;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} role`;
+  remove(_id: number) {
+    return `This action removes a #${_id} role`;
   }
 }

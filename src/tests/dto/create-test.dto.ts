@@ -28,7 +28,7 @@ export class CreateTestDto {
 
   // // parts
   // @IsOptional()
-  // @IsMongoId({ each: true, message: "each part must be a mongo object id" })
+  // @IsMongoId({ each: true, message: "each part must be a mongo object _id" })
   // @IsArray({ message: 'parts must be an array' })
   // parts?: string[];
 }

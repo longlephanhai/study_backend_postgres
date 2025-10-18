@@ -80,15 +80,15 @@ export class TopicsSpeakingService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} topicsSpeaking`;
+  findOne(_id: number) {
+    return `This action returns a #${_id} topicsSpeaking`;
   }
 
-  update(id: number, updateTopicsSpeakingDto: UpdateTopicsSpeakingDto) {
-    return `This action updates a #${id} topicsSpeaking`;
+  update(_id: number, updateTopicsSpeakingDto: UpdateTopicsSpeakingDto) {
+    return `This action updates a #${_id} topicsSpeaking`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} topicsSpeaking`;
+  remove(_id: number) {
+    return `This action removes a #${_id} topicsSpeaking`;
   }
 }

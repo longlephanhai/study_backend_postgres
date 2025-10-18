@@ -10,7 +10,7 @@ import {
 @Entity('topics_speaking')
 export class TopicsSpeaking {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column()
   topic: string;

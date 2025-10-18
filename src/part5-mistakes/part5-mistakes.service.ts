@@ -20,13 +20,13 @@ export class Part5MistakesService {
   }
 
   async generatePart5Mistakes(numQuestions: number, user: IUser) {
-    const examResults = await this.examResultRepository.find({ where: { userId: user.id } });
+    const examResults = await this.examResultRepository.find({ where: { userId: user._id } });
     if (!examResults || examResults.length === 0) {
       throw new BadRequestException('No exam result found for the user');
     }
     const wrongAnswerIds = examResults.map(result => result.wrongAnswer).flat();
     const wrongQuestions = await this.questionRepository.find({
-      where: { id: In(wrongAnswerIds) }
+      where: { _id: In(wrongAnswerIds) }
     });
     const questions101to130 = wrongQuestions.filter(q => q.numberQuestion >= 101 && q.numberQuestion <= 130);
     const categoryMistakeCount: { [key: string]: number } = {};
@@ -88,13 +88,13 @@ export class Part5MistakesService {
   }
 
   async getAllMistakes(user: IUser) {
-    const examResults = await this.examResultRepository.find({ where: { userId: user.id } });
+    const examResults = await this.examResultRepository.find({ where: { userId: user._id } });
     if (!examResults || examResults.length === 0) {
       throw new BadRequestException('No exam result found for the user');
     }
     const wrongAnswerIds = examResults.map(result => result.wrongAnswer).flat();
     const wrongQuestions = await this.questionRepository.find({
-      where: { id: In(wrongAnswerIds) }
+      where: { _id: In(wrongAnswerIds) }
     });
     // part 1
     const questions1to6 = wrongQuestions.filter(q => q.numberQuestion >= 1 && q.numberQuestion <= 6);

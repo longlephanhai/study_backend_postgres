@@ -24,7 +24,7 @@ export class PermissionsService {
     const newPermission = this.permissionRepository.create({
       ...createPermissionDto,
       createdBy: {
-        _id: user.id,
+        _id: user._id,
         email: user.email
       }
     })
@@ -89,15 +89,15 @@ export class PermissionsService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} permission`;
+  findOne(_id: number) {
+    return `This action returns a #${_id} permission`;
   }
 
-  update(id: number, updatePermissionDto: UpdatePermissionDto) {
-    return `This action updates a #${id} permission`;
+  update(_id: number, updatePermissionDto: UpdatePermissionDto) {
+    return `This action updates a #${_id} permission`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} permission`;
+  remove(_id: number) {
+    return `This action removes a #${_id} permission`;
   }
 }

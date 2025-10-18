@@ -19,10 +19,10 @@ export class ExamResultController {
     return this.examResultService.findAll();
   }
 
-  @Get(':id')
+  @Get(':_id')
   @ResponseMessage('Get exam result successfully')
-  findOne(@Param('id') id: string, @User() user: IUser) {
-    return this.examResultService.findOne(id, user);
+  findOne(@Param('_id') _id: string, @User() user: IUser) {
+    return this.examResultService.findOne(_id, user);
   }
 
   @Get('user/history')
@@ -37,13 +37,13 @@ export class ExamResultController {
     return this.examResultService.getPredictedExamResults(user);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExamResultDto: UpdateExamResultDto) {
-    return this.examResultService.update(+id, updateExamResultDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updateExamResultDto: UpdateExamResultDto) {
+    return this.examResultService.update(+_id, updateExamResultDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.examResultService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.examResultService.remove(+_id);
   }
 }

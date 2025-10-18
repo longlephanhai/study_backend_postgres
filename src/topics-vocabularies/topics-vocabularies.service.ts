@@ -31,20 +31,20 @@ export class TopicsVocabulariesService {
   async createMultiple(createTopicsVocabularyDtos: CreateTopicsVocabularyDto[]) {
     const payloads = createTopicsVocabularyDtos.map(dto => ({
       ...dto,
-      vocabularies: (dto.vocabularies || []).map(v => ({ id: v })),
+      vocabularies: (dto.vocabularies || []).map(v => ({ _id: v })),
     }));
     return await this.topicsVocabularyRepository.save(payloads);
   }
 
-  async createMultipleVocabulary(id: string, createVocabularyDto: CreateVocabularyDto[], user: IUser) {
-    const topicsVocabulary = await this.topicsVocabularyRepository.findOne({ where: { id: id } });
+  async createMultipleVocabulary(_id: string, createVocabularyDto: CreateVocabularyDto[], user: IUser) {
+    const topicsVocabulary = await this.topicsVocabularyRepository.findOne({ where: { _id: _id } });
     if (!topicsVocabulary) {
       throw new BadRequestException('TopicsVocabulary not found');
     }
     const vocabularies = await this.vocabularyRepository.find({
       where: {
         vocab: In(createVocabularyDto.map(v => v.vocab)),
-        id: topicsVocabulary.id,
+        _id: topicsVocabulary._id,
       }
     })
     if (vocabularies.length) {
@@ -55,14 +55,14 @@ export class TopicsVocabulariesService {
     const newVocabularies = await this.vocabularyRepository.save(
       createVocabularyDto.map(v => ({
         ...v,
-        topicsVocabulary: topicsVocabulary.id,
+        topicsVocabulary: topicsVocabulary._id,
         createdBy: {
-          _id: user.id,
+          _id: user._id,
           email: user.email,
         }
       }))
     );
-    await this.topicsVocabularyRepository.update(topicsVocabulary.id, {
+    await this.topicsVocabularyRepository.update(topicsVocabulary._id, {
       vocabularies: [...(topicsVocabulary.vocabularies || []), ...newVocabularies],
     })
     return newVocabularies;
@@ -126,16 +126,16 @@ export class TopicsVocabulariesService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(_id: string) {
     return await this.topicsVocabularyRepository.findOne({
-      where: { id: id },
+      where: { _id: _id },
       relations: ['vocabularies']
     });
   }
 
-  async getVocabulariesFromAI(id: string, maxWords = 20) {
+  async getVocabulariesFromAI(_id: string, maxWords = 20) {
     const topicsVocabulary = await this.topicsVocabularyRepository.findOne({
-      where: { id: id },
+      where: { _id: _id },
       relations: ['vocabularies']
     });
     if (!topicsVocabulary) {
@@ -188,11 +188,11 @@ Chỉ trả JSON, không thêm text khác.
     }
   }
 
-  update(id: number, updateTopicsVocabularyDto: UpdateTopicsVocabularyDto) {
-    return `This action updates a #${id} topicsVocabulary`;
+  update(_id: number, updateTopicsVocabularyDto: UpdateTopicsVocabularyDto) {
+    return `This action updates a #${_id} topicsVocabulary`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} topicsVocabulary`;
+  remove(_id: number) {
+    return `This action removes a #${_id} topicsVocabulary`;
   }
 }

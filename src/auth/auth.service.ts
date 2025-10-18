@@ -32,7 +32,7 @@ export class AuthService {
     const payload = {
       email: user.email,
       sub: user._id,
-      role: user.role,
+      role: user.role._id,
       targetScore: user.targetScore,
     };
     return {

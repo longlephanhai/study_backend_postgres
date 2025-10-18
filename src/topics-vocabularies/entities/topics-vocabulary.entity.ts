@@ -12,7 +12,7 @@ import {
 @Entity('topics_vocabularies')
 export class TopicsVocabulary {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column()
   topic: string;
@@ -25,8 +25,8 @@ export class TopicsVocabulary {
   })
   @JoinTable({
     name: 'topics_vocabularies_vocabularies', // tên bảng trung gian
-    joinColumn: { name: 'topic_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'vocabulary_id', referencedColumnName: 'id' },
+    joinColumn: { name: 'topic_id', referencedColumnName: '_id' },
+    inverseJoinColumn: { name: 'vocabulary_id', referencedColumnName: '_id' },
   })
   vocabularies: Vocabulary[];
 

@@ -10,7 +10,7 @@ import {
 @Entity('part5_mistakes')
 export class Part5Mistakes {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column()
   userId: string;

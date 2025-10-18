@@ -8,21 +8,20 @@ export interface StartTestDTO {
   partIds: string[];
 }
 
-
 @Controller('parts')
 export class PartsController {
   constructor(private readonly partsService: PartsService) { }
 
-  @Post(':id/questions')
+  @Post(':_id/questions')
   @ResponseMessage('Question created successfully')
-  createQuestion(@Param('id') id: string, @Body() createQuestionDTO: CreateQuestionDto, @User() user: IUser) {
-    return this.partsService.createQuestion(id, createQuestionDTO, user);
+  createQuestion(@Param('_id') _id: string, @Body() createQuestionDTO: CreateQuestionDto, @User() user: IUser) {
+    return this.partsService.createQuestion(_id, createQuestionDTO, user);
   }
 
-  @Post(':id/questions/multiple')
+  @Post(':_id/questions/multiple')
   @ResponseMessage('Questions created successfully')
-  createMultipleQuestion(@Param('id') id: string, @Body() createQuestionDTO: CreateQuestionDto[], @User() user: IUser) {
-    return this.partsService.createMultipleQuestions(id, createQuestionDTO, user);
+  createMultipleQuestion(@Param('_id') _id: string, @Body() createQuestionDTO: CreateQuestionDto[], @User() user: IUser) {
+    return this.partsService.createMultipleQuestions(_id, createQuestionDTO, user);
   }
 
   @Get()
@@ -40,18 +39,18 @@ export class PartsController {
     return this.partsService.findAllToStart(startTestDTO);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.partsService.findOne(+id);
+  @Get(':_id')
+  findOne(@Param('_id') _id: string) {
+    return this.partsService.findOne(+_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePartDto: UpdatePartDto) {
-    return this.partsService.update(+id, updatePartDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updatePartDto: UpdatePartDto) {
+    return this.partsService.update(+_id, updatePartDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.partsService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.partsService.remove(+_id);
   }
 }

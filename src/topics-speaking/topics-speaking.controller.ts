@@ -28,18 +28,18 @@ export class TopicsSpeakingController {
     return this.topicsSpeakingService.findAll(+currentPage, +limit, qs);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.topicsSpeakingService.findOne(+id);
+  @Get(':_id')
+  findOne(@Param('_id') _id: string) {
+    return this.topicsSpeakingService.findOne(+_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTopicsSpeakingDto: UpdateTopicsSpeakingDto) {
-    return this.topicsSpeakingService.update(+id, updateTopicsSpeakingDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updateTopicsSpeakingDto: UpdateTopicsSpeakingDto) {
+    return this.topicsSpeakingService.update(+_id, updateTopicsSpeakingDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.topicsSpeakingService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.topicsSpeakingService.remove(+_id);
   }
 }

@@ -4,7 +4,7 @@ import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { ResponseMessage, User } from 'src/decorator/customize';
 
-@Controller('role')
+@Controller('roles')
 export class RoleController {
   constructor(private readonly roleService: RoleService) { }
 
@@ -23,19 +23,19 @@ export class RoleController {
     return this.roleService.findAll(+currentPage, +limit, qs);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.roleService.findOne(+id);
+  @Get(':_id')
+  findOne(@Param('_id') _id: string) {
+    return this.roleService.findOne(+_id);
   }
 
-  @Patch(':id')
+  @Patch(':_id')
   @ResponseMessage("Update role successfully")
-  update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto, @User() user: IUser) {
-    return this.roleService.update(id, updateRoleDto, user);
+  update(@Param('_id') _id: string, @Body() updateRoleDto: UpdateRoleDto, @User() user: IUser) {
+    return this.roleService.update(_id, updateRoleDto, user);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.roleService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.roleService.remove(+_id);
   }
 }

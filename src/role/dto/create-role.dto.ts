@@ -8,7 +8,7 @@ export class CreateRoleDto {
 
 
   @IsNotEmpty({ message: 'permissions is required' })
-  @IsMongoId({ each: true, message: "each permission must be a mongo object id" })
+  @IsMongoId({ each: true, message: "each permission must be a mongo object _id" })
   @IsArray({ message: 'permissions must be an array' })
   permissions: string[];
 }

@@ -21,7 +21,7 @@ export class CreateUserDto {
   @IsNotEmpty({ message: 'Address is required' })
   address: string;
 
-  // Với TypeORM, role.id là uuid nên ta dùng IsUUID
+  // Với TypeORM, role._id là uuid nên ta dùng IsUUID
   @IsNotEmpty({ message: 'Role is required' })
   @IsUUID('4', { message: 'Role must be a valid UUID' })
   roleId: string;

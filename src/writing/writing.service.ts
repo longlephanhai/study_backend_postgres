@@ -85,15 +85,15 @@ export class WritingService {
     }
   }
 
-  async findOne(id: string) {
-    return await this.writingRepository.findOne({ where: { id } });
+  async findOne(_id: string) {
+    return await this.writingRepository.findOne({ where: { _id } });
   }
 
-  update(id: number, updateWritingDto: UpdateWritingDto) {
-    return `This action updates a #${id} writing`;
+  update(_id: number, updateWritingDto: UpdateWritingDto) {
+    return `This action updates a #${_id} writing`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} writing`;
+  remove(_id: number) {
+    return `This action removes a #${_id} writing`;
   }
 }

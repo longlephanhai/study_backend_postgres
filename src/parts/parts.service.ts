@@ -23,9 +23,9 @@ export class PartsService {
     return 'This action adds a new part';
   }
 
-  async createQuestion(id: string, createQuestionDTO: CreateQuestionDto, user: IUser) {
+  async createQuestion(_id: string, createQuestionDTO: CreateQuestionDto, user: IUser) {
     const part = await this.partRepository.findOne({
-      where: { id },
+      where: { _id },
     })
     if (!part) {
       throw new BadRequestException('Part not found');
@@ -33,49 +33,54 @@ export class PartsService {
     const newQuestion = await this.questionRepository.create({
       ...createQuestionDTO,
       createdBy: {
-        _id: user.id,
+        _id: user._id,
         email: user.email,
       }
     })
-    await this.partRepository.update(part.id, {
+    await this.partRepository.update(part._id, {
       questions: [...(part.questions || []), newQuestion],
     })
     return newQuestion;
   }
 
-  async createMultipleQuestions(id: string, createQuestionDTO: CreateQuestionDto[], user: IUser) {
+  async createMultipleQuestions(_id: string, createQuestionDTO: CreateQuestionDto[], user: IUser) {
     const part = await this.partRepository.findOne({
-      where: { id },
-    })
+      where: { _id },
+      relations: ['questions'], // 👈 đảm bảo có load sẵn quan hệ
+    });
     if (!part) {
       throw new BadRequestException('Part not found');
     }
+
     const questions = await this.questionRepository.find({
       where: {
         numberQuestion: In(createQuestionDTO.map(q => q.numberQuestion)),
-        id: In(part.questions)
-      }
-    })
+        _id: In((part.questions || []).map(q => q._id)),
+      },
+    });
 
     if (questions.length) {
       const existNumbers = questions.map(q => q.numberQuestion);
-      throw new BadRequestException(`Questions with these numbers are already exist: ${existNumbers.join(', ')}`);
+      throw new BadRequestException(`Questions with these numbers already exist: ${existNumbers.join(', ')}`);
     }
 
     const newQuestions = await this.questionRepository.save(
       createQuestionDTO.map(q => ({
         ...q,
         createdBy: {
-          _id: user.id,
+          _id: user._id,
           email: user.email,
-        }
-      }))
-    )
-    await this.partRepository.update(part.id, {
-      questions: [...(part.questions || []), ...newQuestions],
-    })
+        },
+      })),
+    );
+
+    
+    part.questions = [...(part.questions || []), ...newQuestions];
+    await this.partRepository.save(part);
+
     return newQuestions;
   }
+
 
   async findAll(currentPage: number, limit: number, qs: string) {
     const { filter, sort, population } = aqp(qs);
@@ -138,22 +143,22 @@ export class PartsService {
   async findAllToStart(startTestDTO: StartTestDTO) {
     const parts = await this.partRepository.find({
       where: {
-        id: In(startTestDTO.partIds)
+        _id: In(startTestDTO.partIds)
       },
       relations: ['questions']
     });
     return parts;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} part`;
+  findOne(_id: number) {
+    return `This action returns a #${_id} part`;
   }
 
-  update(id: number, updatePartDto: UpdatePartDto) {
-    return `This action updates a #${id} part`;
+  update(_id: number, updatePartDto: UpdatePartDto) {
+    return `This action updates a #${_id} part`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} part`;
+  remove(_id: number) {
+    return `This action removes a #${_id} part`;
   }
 }

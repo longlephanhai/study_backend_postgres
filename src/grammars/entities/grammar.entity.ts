@@ -10,7 +10,7 @@ import {
 @Entity('grammars')
 export class Grammar {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column()
   title: string;

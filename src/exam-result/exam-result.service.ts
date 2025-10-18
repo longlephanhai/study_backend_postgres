@@ -36,7 +36,7 @@ export class ExamResultService {
   async create(createExamResultDto: CreateExamResultDto, user: IUser) {
     const payload: any = {
       ...createExamResultDto,
-      user: { id: user.id },
+      user: { _id: user._id },
     };
     const createdExamResult = await this.examResultRepository.save(payload);
     return createdExamResult;
@@ -46,20 +46,20 @@ export class ExamResultService {
     return `This action returns all examResult`;
   }
 
-  async findOne(id: string, user: IUser) {
+  async findOne(_id: string, user: IUser) {
     const examResult = await this.examResultRepository.findOne({
-      where: { id },
+      where: { _id },
       relations: ['user']
     });
-    if (!examResult || examResult.userId !== user.id) {
+    if (!examResult || examResult.userId !== user._id) {
       throw new BadRequestException('Exam result not found');
     }
 
     const getQuestionsData = async (answerIds: (string | Question)[]) => {
       if (!answerIds?.length) return [];
-      const ids = answerIds.map(a => typeof a === 'string' ? a : (a as Question).id);
+      const ids = answerIds.map(a => typeof a === 'string' ? a : (a as Question)._id);
       const questions = await this.questionRepository.find({
-        where: { id: In(ids) }
+        where: { _id: In(ids) }
       });
 
       return questions.map(q => ({
@@ -89,15 +89,15 @@ export class ExamResultService {
   }
 
   async getHistoryExamResults(user: IUser) {
-    return this.examResultRepository.find({ where: { userId: user.id } });
+    return this.examResultRepository.find({ where: { userId: user._id } });
   }
 
   async getPartCorrectCount(part: IPart) {
     let count = 0;
     const questionIds = part.answers.map(a => a.questionId);
-    const questions = await this.questionRepository.find({ where: { id: In(questionIds) } });
+    const questions = await this.questionRepository.find({ where: { _id: In(questionIds) } });
     part.answers.forEach(a => {
-      const question = questions.find(q => q.id.toString() === a.questionId.toString());
+      const question = questions.find(q => q._id.toString() === a.questionId.toString());
       if (question && question.correctAnswer === a.answer) {
         count += 1;
       }
@@ -207,7 +207,7 @@ Gợi ý hành vi:
 
   async getPredictedExamResults(user: IUser) {
     const examResults = await this.examResultRepository.find({
-      where: { userId: user.id },
+      where: { userId: user._id },
       select: [
         'totalListeningCorrect',
         'totalReadingCorrect',
@@ -338,11 +338,11 @@ Gợi ý hành vi:
     }
   }
 
-  update(id: number, updateExamResultDto: UpdateExamResultDto) {
-    return `This action updates a #${id} examResult`;
+  update(_id: number, updateExamResultDto: UpdateExamResultDto) {
+    return `This action updates a #${_id} examResult`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} examResult`;
+  remove(_id: number) {
+    return `This action removes a #${_id} examResult`;
   }
 }

@@ -17,18 +17,18 @@ export class QuestionController {
     return this.questionService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.questionService.findOne(+id);
+  @Get(':_id')
+  findOne(@Param('_id') _id: string) {
+    return this.questionService.findOne(+_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateQuestionDto: UpdateQuestionDto) {
-    return this.questionService.update(+id, updateQuestionDto);
+  @Patch(':_id')
+  update(@Param('_id') _id: string, @Body() updateQuestionDto: UpdateQuestionDto) {
+    return this.questionService.update(+_id, updateQuestionDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.questionService.remove(+id);
+  @Delete(':_id')
+  remove(@Param('_id') _id: string) {
+    return this.questionService.remove(+_id);
   }
 }

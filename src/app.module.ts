@@ -25,6 +25,17 @@ import { WritingHistoryModule } from './writing-history/writing-history.module';
 import { User } from './users/entities/user.entity';
 import { Role } from './role/entities/role.entity';
 import { Permission } from './permissions/entities/permission.entity';
+import { Question } from './question/entities/question.entity';
+import { Part } from './parts/entities/part.entity';
+import { ExamResult } from './exam-result/entities/exam-result.entity';
+import { Grammar } from './grammars/entities/grammar.entity';
+import { Part5Mistakes } from './part5-mistakes/entities/part5-mistake.entity';
+import { Test } from './tests/entities/test.entity';
+import { TopicsSpeaking } from './topics-speaking/entities/topics-speaking.entity';
+import { TopicsVocabulary } from './topics-vocabularies/entities/topics-vocabulary.entity';
+import { Vocabulary } from './vocabularies/entities/vocabulary.entity';
+import { Writing } from './writing/entities/writing.entity';
+import { WritingHistory } from './writing-history/entities/writing-history.entity';
 
 
 @Module({
@@ -44,7 +55,18 @@ import { Permission } from './permissions/entities/permission.entity';
         entities: [
           User,
           Role,
-          Permission
+          Permission,
+          Question,
+          Part,
+          ExamResult,
+          Grammar,
+          Part5Mistakes,
+          Test,
+          TopicsSpeaking,
+          TopicsVocabulary,
+          Vocabulary,
+          Writing,
+          WritingHistory
         ],
         synchronize: true,
       }),

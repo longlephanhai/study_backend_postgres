@@ -32,7 +32,7 @@ export class User {
   avatar: string;
 
   @Column({ nullable: true })
-  phone: number;
+  phone: string;
 
   @Column({ nullable: true })
   address: string;
@@ -45,10 +45,10 @@ export class User {
   @Column({ default: 500 })
   targetScore: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({default: () => 'CURRENT_TIMESTAMP'})
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({default: () => 'CURRENT_TIMESTAMP'})
   updatedAt: Date;
 
   @Column({ type: 'json', nullable: true })

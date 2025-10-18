@@ -1,6 +1,6 @@
 declare global {
   interface IUser {
-    _id: mongoose.Schema.Types.ObjectId;
+    id: string;
     fullName: string;
     age: number;
     email: string;

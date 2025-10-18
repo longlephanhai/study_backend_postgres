@@ -18,8 +18,8 @@ export class CreatePartDto {
   description?: string;
 
   // Questions
-  @IsOptional()
-  @IsMongoId({ each: true, message: "each question must be a mongo object id" })
-  @IsArray({ message: 'questions must be an array' })
-  questions: string[];
+  // @IsOptional()
+  // @IsMongoId({ each: true, message: "each question must be a mongo object id" })
+  // @IsArray({ message: 'questions must be an array' })
+  // questions: string[];
 }

@@ -59,7 +59,7 @@ export class UsersService {
       role: createUserDto.roleId ? { id: createUserDto.roleId } as Role : undefined,
       password: hashedPassword,
       createdBy: {
-        _id: user._id,
+        _id: user.id,
         email: user.email
       }
     });

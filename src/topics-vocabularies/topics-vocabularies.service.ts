@@ -37,14 +37,17 @@ export class TopicsVocabulariesService {
   }
 
   async createMultipleVocabulary(_id: string, createVocabularyDto: CreateVocabularyDto[], user: IUser) {
-    const topicsVocabulary = await this.topicsVocabularyRepository.findOne({ where: { _id: _id } });
+    const topicsVocabulary = await this.topicsVocabularyRepository.findOne({
+      where: { _id: _id },
+      relations: ['vocabularies']
+    });
     if (!topicsVocabulary) {
       throw new BadRequestException('TopicsVocabulary not found');
     }
     const vocabularies = await this.vocabularyRepository.find({
       where: {
         vocab: In(createVocabularyDto.map(v => v.vocab)),
-        _id: topicsVocabulary._id,
+        _id: In((topicsVocabulary.vocabularies || []).map(v => v._id)),
       }
     })
     if (vocabularies.length) {
@@ -62,9 +65,8 @@ export class TopicsVocabulariesService {
         }
       }))
     );
-    await this.topicsVocabularyRepository.update(topicsVocabulary._id, {
-      vocabularies: [...(topicsVocabulary.vocabularies || []), ...newVocabularies],
-    })
+    topicsVocabulary.vocabularies = [...(topicsVocabulary.vocabularies || []), ...newVocabularies];
+    await this.topicsVocabularyRepository.save(topicsVocabulary);
     return newVocabularies;
   }
 

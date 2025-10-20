@@ -4,7 +4,7 @@ import { UpdateGrammarDto } from './dto/update-grammar.dto';
 import aqp from 'api-query-params';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Grammar } from './entities/grammar.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { ConfigService } from '@nestjs/config';
 
@@ -22,6 +22,27 @@ export class GrammarsService {
 
   create(createGrammarDto: CreateGrammarDto) {
     return 'This action adds a new grammar';
+  }
+
+  async createMultiple(createGrammarDtos: CreateGrammarDto[], user: IUser) {
+    const titles = createGrammarDtos.map(dto => dto.title);
+    const isExist = await this.grammarRepository.find({
+      where: { title: In(titles) }
+    })
+    if (isExist.length > 0) {
+      const existTitles = isExist.map(g => g.title);
+      throw new BadRequestException(`Grammars with titles [${existTitles.join(", ")}] already exist.`);
+    }
+    const newGrammars = await this.grammarRepository.save(
+      createGrammarDtos.map(dto => ({
+        ...dto,
+        createdBy: {
+          _id: user._id,
+          email: user.email
+        },
+      }))
+    );
+    return newGrammars;
   }
 
   async findQuestionsByAI(_id: string) {

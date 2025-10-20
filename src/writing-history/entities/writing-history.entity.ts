@@ -14,18 +14,19 @@ export class WritingHistory {
   @PrimaryGeneratedColumn('uuid')
   _id: string;
 
-  @Column()
-  userId: string; // mongoose.Schema.Types.ObjectId → string (uuid hoặc ObjectId)
+  @Column({ name: 'userId' })
+  userId: string;
+
 
   @ManyToOne(() => Writing, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'writingId' })
-  writing: Writing;
+  writingId: Writing;
 
   @Column({ type: 'text' })
   content: string;
 
   @Column({ type: 'jsonb', nullable: true })
-  feedback: WritingFeedback; // hoặc bạn có thể thay bằng `any`
+  feedback: WritingFeedback;
 
   @Column({ type: 'jsonb', nullable: true })
   score: any;

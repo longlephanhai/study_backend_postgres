@@ -14,9 +14,16 @@ export class WritingHistoryService {
   ) { }
 
   async create(createWritingHistoryDto: CreateWritingHistoryDto) {
-    const createdWritingHistory = await this.writingHistoryRepository.save(createWritingHistoryDto);
-    return createdWritingHistory;
+    const { writingId, ...rest } = createWritingHistoryDto;
+
+    const createdWritingHistory = this.writingHistoryRepository.create({
+      ...rest,
+      writingId: { _id: writingId },
+    });
+
+    return await this.writingHistoryRepository.save(createdWritingHistory);
   }
+
 
   async findAll(currentPage: number, limit: number, qs: string) {
     const { filter, sort, population } = aqp(qs);
@@ -80,8 +87,8 @@ export class WritingHistoryService {
     return await this.writingHistoryRepository.findOne({ where: { _id, userId } });
   }
 
-  async findByUserId(userId: string) {
-    return await this.writingHistoryRepository.find({ where: { userId }, relations: ['writingId'] });
+  async findByUserId(user: any) {
+    return await this.writingHistoryRepository.find({ where: { userId: user._id }, relations: ['writingId'] });
   }
 
   update(_id: number, updateWritingHistoryDto: UpdateWritingHistoryDto) {

@@ -1,15 +1,12 @@
+import { Part } from 'src/parts/entities/part.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
-  JoinTable,
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
-import { Part } from 'src/parts/entities/part.entity';
-import { Question } from 'src/question/entities/question.entity';
 
 @Entity('exam_results')
 export class ExamResult {
@@ -22,50 +19,28 @@ export class ExamResult {
   @Column()
   userId: string;
 
-  @Column()
+  @Column({ default: 0 })
   totalCorrect: number;
 
-  @Column()
+  @Column({ default: 0 })
   totalListeningCorrect: number;
 
-  @Column()
+  @Column({ default: 0 })
   totalReadingCorrect: number;
 
-  // Quan hệ với Part
-  @ManyToMany(() => Part)
-  @JoinTable({
-    name: 'exam_result_parts',
-    joinColumn: { name: 'exam_result_id', referencedColumnName: '_id' },
-    inverseJoinColumn: { name: 'part_id', referencedColumnName: '_id' },
-  })
+
+  @Column('jsonb', { default: [] })
+  correctAnswer: string[];
+
+  @Column('jsonb', { default: [] })
+  wrongAnswer: string[];
+
+  @Column('jsonb', { default: [] })
+  noAnswer: string[];
+
+  
+  @Column('jsonb', { default: [] })
   parts: Part[];
-
-  // Câu trả lời đúng
-  @ManyToMany(() => Question)
-  @JoinTable({
-    name: 'exam_result_correct_answers',
-    joinColumn: { name: 'exam_result_id', referencedColumnName: '_id' },
-    inverseJoinColumn: { name: 'question_id', referencedColumnName: '_id' },
-  })
-  correctAnswer: Question[];
-
-  // Câu trả lời sai
-  @ManyToMany(() => Question)
-  @JoinTable({
-    name: 'exam_result_wrong_answers',
-    joinColumn: { name: 'exam_result_id', referencedColumnName: '_id' },
-    inverseJoinColumn: { name: 'question_id', referencedColumnName: '_id' },
-  })
-  wrongAnswer: Question[];
-
-  // Câu không trả lời
-  @ManyToMany(() => Question)
-  @JoinTable({
-    name: 'exam_result_no_answers',
-    joinColumn: { name: 'exam_result_id', referencedColumnName: '_id' },
-    inverseJoinColumn: { name: 'question_id', referencedColumnName: '_id' },
-  })
-  noAnswer: Question[];
 
   @Column({ nullable: true })
   totalScore?: number;

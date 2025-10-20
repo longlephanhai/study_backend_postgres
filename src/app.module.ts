@@ -36,6 +36,8 @@ import { TopicsVocabulary } from './topics-vocabularies/entities/topics-vocabula
 import { Vocabulary } from './vocabularies/entities/vocabulary.entity';
 import { Writing } from './writing/entities/writing.entity';
 import { WritingHistory } from './writing-history/entities/writing-history.entity';
+import { SurveysModule } from './surveys/surveys.module';
+import { Survey } from './surveys/entities/survey.entity';
 
 
 @Module({
@@ -66,7 +68,8 @@ import { WritingHistory } from './writing-history/entities/writing-history.entit
           TopicsVocabulary,
           Vocabulary,
           Writing,
-          WritingHistory
+          WritingHistory,
+          Survey
         ],
         synchronize: true,
       }),
@@ -90,7 +93,8 @@ import { WritingHistory } from './writing-history/entities/writing-history.entit
     VocabulariesModule,
     WritingModule,
     WritingAiModule,
-    WritingHistoryModule
+    WritingHistoryModule,
+    SurveysModule
   ],
   controllers: [AppController],
   providers: [AppService],

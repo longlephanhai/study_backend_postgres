@@ -38,6 +38,28 @@ import { Writing } from './writing/entities/writing.entity';
 import { WritingHistory } from './writing-history/entities/writing-history.entity';
 import { SurveysModule } from './surveys/surveys.module';
 import { Survey } from './surveys/entities/survey.entity';
+import { LearningPathModule } from './learning-path/learning-path.module';
+import { LearningStepModule } from './learning-step/learning-step.module';
+import { LearningTaskModule } from './learning-task/learning-task.module';
+import { UserTaskProgressModule } from './user-task-progress/user-task-progress.module';
+import { Part1Module } from './part1/part1.module';
+import { Part2Module } from './part2/part2.module';
+import { Part3Module } from './part3/part3.module';
+import { Part4Module } from './part4/part4.module';
+import { Part5Module } from './part5/part5.module';
+import { Part6Module } from './part6/part6.module';
+import { Part7Module } from './part7/part7.module';
+import { Part1 } from './part1/entities/part1.entity';
+import { Part2 } from './part2/entities/part2.entity';
+import { Part3 } from './part3/entities/part3.entity';
+import { Part4 } from './part4/entities/part4.entity';
+import { Part5 } from './part5/entities/part5.entity';
+import { Part6 } from './part6/entities/part6.entity';
+import { Part7 } from './part7/entities/part7.entity';
+import { LearningPath } from './learning-path/entities/learning-path.entity';
+import { LearningStep } from './learning-step/entities/learning-step.entity';
+import { LearningTask } from './learning-task/entities/learning-task.entity';
+import { UserTaskProgress } from './user-task-progress/entities/user-task-progress.entity';
 
 
 @Module({
@@ -69,7 +91,18 @@ import { Survey } from './surveys/entities/survey.entity';
           Vocabulary,
           Writing,
           WritingHistory,
-          Survey
+          Survey,
+          Part1,
+          Part2,
+          Part3,
+          Part4,
+          Part5,
+          Part6,
+          Part7,
+          LearningPath,
+          LearningStep,
+          LearningTask,
+          UserTaskProgress
         ],
         synchronize: true,
       }),
@@ -94,7 +127,18 @@ import { Survey } from './surveys/entities/survey.entity';
     WritingModule,
     WritingAiModule,
     WritingHistoryModule,
-    SurveysModule
+    SurveysModule,
+    LearningPathModule,
+    LearningStepModule,
+    LearningTaskModule,
+    UserTaskProgressModule,
+    Part1Module,
+    Part2Module,
+    Part3Module,
+    Part4Module,
+    Part5Module,
+    Part6Module,
+    Part7Module
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -12,5 +12,6 @@ import { Grammar } from './entities/grammar.entity';
   ],
   controllers: [GrammarsController],
   providers: [GrammarsService],
+  exports: [GrammarsService],
 })
 export class GrammarsModule { }

@@ -20,7 +20,7 @@ export class Part5MistakesService {
   }
 
   async generatePart5Mistakes(numQuestions: number, user: IUser) {
-    const examResults = await this.examResultRepository.find({ where: { userId: user._id } });
+    const examResults = await this.examResultRepository.find({ where: { user: { _id: user._id } } });
     if (!examResults || examResults.length === 0) {
       throw new BadRequestException('No exam result found for the user');
     }
@@ -88,7 +88,7 @@ export class Part5MistakesService {
   }
 
   async getAllMistakes(user: IUser) {
-    const examResults = await this.examResultRepository.find({ where: { userId: user._id } });
+    const examResults = await this.examResultRepository.find({ where: { user: { _id: user._id } } });
     if (!examResults || examResults.length === 0) {
       throw new BadRequestException('No exam result found for the user');
     }

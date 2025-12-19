@@ -84,11 +84,11 @@ export class WritingHistoryService {
   }
 
   async findOne(_id: string, userId: string) {
-    return await this.writingHistoryRepository.findOne({ where: { _id, userId } });
+    return await this.writingHistoryRepository.findOne({ where: { _id, user: { _id: userId } } });
   }
 
   async findByUserId(user: any) {
-    return await this.writingHistoryRepository.find({ where: { userId: user._id }, relations: ['writingId'] });
+    return await this.writingHistoryRepository.find({ where: { user: { _id: user._id } }, relations: ['writingId'] });
   }
 
   update(_id: number, updateWritingHistoryDto: UpdateWritingHistoryDto) {

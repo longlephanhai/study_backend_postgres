@@ -61,7 +61,7 @@ export class ExamResultService {
     const examResult = await this.examResultRepository.findOne({
       where: { _id },
     });
-    if (!examResult || examResult.userId !== user._id) {
+    if (!examResult || examResult.user._id !== user._id) {
       throw new BadRequestException('Exam result not found');
     }
 
@@ -100,9 +100,11 @@ export class ExamResultService {
 
   async getHistoryExamResults(user: IUser) {
     return this.examResultRepository.find({
-      where: { userId: user._id },
+      where: { user: { _id: user._id } },
+      relations: ['user'],
     });
   }
+
 
   async getPartCorrectCount(part: IPart) {
     let count = 0;
@@ -221,7 +223,7 @@ Lưu ý quan trọng:
 
   async getPredictedExamResults(user: IUser) {
     const examResults = await this.examResultRepository.find({
-      where: { userId: user._id },
+      where: { user: { _id: user._id } },
       select: [
         'totalListeningCorrect',
         'totalReadingCorrect',

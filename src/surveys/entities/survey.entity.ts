@@ -1,3 +1,4 @@
+import { User } from 'src/users/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -5,6 +6,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity({ name: 'surveys' })
@@ -12,8 +15,12 @@ export class Survey {
   @PrimaryGeneratedColumn('uuid')
   _id: string;
 
-  @Column({ nullable: false })
-  userId: string; 
+  // @Column({ nullable: false })
+  // userId: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 
   @Column({ nullable: false })
   toeicHistory: string;

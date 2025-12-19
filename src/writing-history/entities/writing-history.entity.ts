@@ -8,14 +8,19 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Writing } from 'src/writing/entities/writing.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity('writing_histories')
 export class WritingHistory {
   @PrimaryGeneratedColumn('uuid')
   _id: string;
 
-  @Column({ name: 'userId' })
-  userId: string;
+  // @Column({ name: 'userId' })
+  // userId: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 
 
   @ManyToOne(() => Writing, { nullable: false, onDelete: 'CASCADE' })
